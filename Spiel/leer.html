@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Guide-Into</title>
+
+
+    <style type='text/css'>
+
+        body {
+            background: transparent;
+            font-family: 'Lato', Times, 'Times New Roman', serif;
+            font-size: 16px;
+            color: #eee;
+            overflow: hidden;
+        }
+
+        a:link {
+            cursor: url('../cursa.html'), auto !important;
+            font-family: Comic Sans MS;
+            font-size: 12px;
+            color: #C0C0C0;
+            font-weight: bold;
+            text-decoration: none;
+            text-underline: none;
+        }
+
+        a:active {
+            cursor: url('../cursa.html'), auto !important;
+            font-family: Comic Sans MS;
+            font-size: 12px;
+            color: #C0C0C0;
+            font-weight: bold;
+            text-decoration: none;
+            text-underline: none;
+        }
+
+        a:visited {
+            cursor: url('../cursa.html'), auto !important;
+            font-family: Comic Sans MS;
+            font-size: 12px;
+            color: #C0C0C0;
+            font-weight: bold;
+            text-decoration: none;
+            text-underline: none;
+        }
+
+        a:hover {
+            cursor: url('../cursa.html'), auto !important;
+            font-family: Comic Sans MS;
+            font-size: 12px;
+            color: #0080FF;
+            font-weight: bold;
+            text-decoration: none;
+            text-underline: none;
+        }
+
+        article {
+            display: inline-block;
+            margin: 20px;
+            width: 480px;
+        }
+
+        h1, h2 {
+            font-size: 24px;
+            display: inline-block;
+        }
+
+        h2 {
+            color: #ccc;
+        }
+
+        p {
+            margin: 10px 0 10px 0;
+            font-size: 15px;
+        }
+
+        small {
+            display: block;
+            margin: 10px 0 20px 0;
+            color: #bbb;
+        }
+
+        del {
+            opacity: 0.3;
+        }
+
+        .sharing {
+            position: absolute;
+            bottom: 16px;
+            left: 20px;
+        }
+
+        .forkit-curtain {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding-top: 10%;
+        }
+
+        .forkit-curtain .close-button {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            right: 20px;
+            top: 20px;
+            cursor: pointer;
+            background: url(pics/close.png);
+        }
+
+    </style>
+
+
+    <style type='text/css'>
+
+        * {
+            margin: 0px;
+            padding: 0px;
+
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .forkit {
+            position: absolute;
+            right: 0;
+            top: 0;
+
+            width: 200px;
+            height: 150px;
+
+            font-family: 'Lato', sans-serif;
+            text-decoration: none;
+        }
+
+        .forkit .tag {
+            display: block;
+            height: 30px;
+            width: 200px;
+
+            color: #C0C0C0;
+            background-image: url(pics/bg1.png);
+            font-family: Verdana;
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            line-height: 30px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+
+            -webkit-transform-origin: 15px 0px;
+            -moz-transform-origin: 15px 0px;
+            -ms-transform-origin: 15px 0px;
+            -o-transform-origin: 15px 0px;
+            transform-origin: 15px 0px;
+        }
+
+        .forkit .tag:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 196px;
+            height: 26px;
+            margin: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .forkit .string {
+            display: block;
+            height: 1px;
+            width: 0px;
+            position: absolute;
+
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+
+            -webkit-transform-origin: 0px 0px;
+            -moz-transform-origin: 0px 0px;
+            -ms-transform-origin: 0px 0px;
+            -o-transform-origin: 0px 0px;
+            transform-origin: 0px 0px;
+        }
+
+        .forkit-curtain {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: -100%;
+        }
+
+    </style>
+
+
+</head>
+
+
+<body style="background-image:url(pics/zynaron.png); background-position:top center; background-repeat:no-repeat;">
+
+
+<div class="forkit-curtain">
+    <div class="close-button"></div>
+    <center>
+        <img src="pics/corlogo.png" border="0" width="450"></center>
+</div>
+
+
+<a class="forkit" data-text="Das Spiel" data-text-detached="Das Spiel ><img src=" pics/bg1.png"></a>
+
+<script type='text/javascript'>
+
+    (function () {
+
+        var STATE_CLOSED = 0,
+            STATE_DETACHED = 1,
+            STATE_OPENED = 2,
+
+            TAG_HEIGHT = 30,
+            TAG_WIDTH = 200,
+            MAX_STRAIN = 40,
+
+            DRAG_THRESHOLD = 0.36;
+
+        VENDORS = ['Webkit', 'Moz', 'O', 'ms'];
+
+        var dom = {
+                ribbon: null,
+                ribbonString: null,
+                ribbonTag: null,
+                curtain: null,
+                closeButton: null
+            },
+
+            state = STATE_CLOSED,
+
+            closedText = '',
+            detachedText = '',
+
+            friction = 1.04;
+        gravity = 1.5,
+
+            closedX = TAG_WIDTH * 0.4,
+            closedY = -TAG_HEIGHT * 0.5,
+
+            openedX = TAG_WIDTH * 0.4,
+            openedY = TAG_HEIGHT,
+
+            velocity = 0,
+            rotation = 45,
+
+            curtainTargetY = 0,
+            curtainCurrentY = 0,
+
+            dragging = false,
+            dragTime = 0,
+            dragY = 0,
+
+            anchorA = new Point(closedX, closedY),
+            anchorB = new Point(closedX, closedY),
+
+            mouse = new Point();
+
+        function initialize() {
+
+            dom.ribbon = document.querySelector('.forkit');
+            dom.curtain = document.querySelector('.forkit-curtain');
+            dom.closeButton = document.querySelector('.forkit-curtain .close-button');
+
+            if (dom.ribbon) {
+
+                closedText = dom.ribbon.getAttribute('data-text') || '';
+                detachedText = dom.ribbon.getAttribute('data-text-detached') || closedText;
+
+                dom.ribbon.innerHTML = '<span class="string"></span><span class="tag">' + closedText + '</span>';
+                dom.ribbonString = dom.ribbon.querySelector('.string');
+                dom.ribbonTag = dom.ribbon.querySelector('.tag');
+
+                dom.ribbon.addEventListener('click', onRibbonClick, false);
+                document.addEventListener('mousemove', onMouseMove, false);
+                document.addEventListener('mousedown', onMouseDown, false);
+                document.addEventListener('mouseup', onMouseUp, false);
+                window.addEventListener('resize', layout, false);
+
+                if (dom.closeButton) {
+                    dom.closeButton.addEventListener('click', onCloseClick, false);
+                }
+
+                animate();
+
+            }
+
+        }
+
+        function onMouseDown(event) {
+            if (dom.curtain && state === STATE_DETACHED) {
+                event.preventDefault();
+
+                dragY = event.clientY;
+                dragTime = Date.now();
+                dragging = true;
+
+            }
+        }
+
+        function onMouseMove(event) {
+            mouse.x = event.clientX;
+            mouse.y = event.clientY;
+        }
+
+        function onMouseUp(event) {
+            if (state !== STATE_OPENED) {
+                state = STATE_CLOSED;
+                dragging = false;
+            }
+        }
+
+        function onRibbonClick(event) {
+            if (dom.curtain) {
+                event.preventDefault();
+
+                if (state === STATE_OPENED) {
+                    close();
+                }
+                else if (Date.now() - dragTime < 300) {
+                    open();
+                }
+            }
+        }
+
+        function onCloseClick(event) {
+            event.preventDefault();
+            close();
+        }
+
+        function layout() {
+            if (state === STATE_OPENED) {
+                curtainTargetY = window.innerHeight;
+                curtainCurrentY = curtainTargetY;
+            }
+        }
+
+        function open() {
+            dragging = false;
+            state = STATE_OPENED;
+        }
+
+        function close() {
+            dragging = false;
+            state = STATE_CLOSED;
+            dom.ribbonTag.innerHTML = closedText;
+        }
+
+        function detach() {
+            state = STATE_DETACHED;
+            dom.ribbonTag.innerHTML = detachedText;
+        }
+
+        function animate() {
+            update();
+            render();
+
+            requestAnimFrame(animate);
+        }
+
+        function update() {
+// Distance between mouse and top right corner
+            var distance = distanceBetween(mouse.x, mouse.y, window.innerWidth, 0);
+
+// If we're OPENED the curtainTargetY should ease towards page bottom
+            if (state === STATE_OPENED) {
+                curtainTargetY = Math.min(curtainTargetY + ( window.innerHeight - curtainTargetY ) * 0.2, window.innerHeight);
+            }
+            else {
+
+// Detach the tag when hovering close enough
+                if (distance < TAG_WIDTH * 1.5) {
+                    detach();
+                }
+// Re-attach the tag if the user moved away
+                else if (!dragging && state === STATE_DETACHED && distance > TAG_WIDTH * 2) {
+                    close();
+                }
+
+                if (dragging) {
+// Updat the curtain position while dragging
+                    curtainTargetY = Math.max(mouse.y - dragY, 0);
+
+// If the threshold is crossed, open the curtain
+                    if (curtainTargetY > window.innerHeight * DRAG_THRESHOLD) {
+                        open();
+                    }
+                }
+                else {
+                    curtainTargetY *= 0.8;
+                }
+
+            }
+
+// Ease towards the target position of the curtain
+            curtainCurrentY += ( curtainTargetY - curtainCurrentY ) * 0.3;
+
+// If we're dragging or detached we need to simulate
+// the physical behavior of the ribbon
+            if (dragging || state === STATE_DETACHED) {
+
+// Apply forces
+                velocity /= friction;
+                velocity += gravity;
+
+                var containerOffsetX = dom.ribbon.offsetLeft;
+
+                var offsetX = Math.max(( ( mouse.x - containerOffsetX ) - closedX ) * 0.2, -MAX_STRAIN);
+
+                anchorB.x += ( ( closedX + offsetX ) - anchorB.x ) * 0.1;
+                anchorB.y += velocity;
+
+                var strain = distanceBetween(anchorA.x, anchorA.y, anchorB.x, anchorB.y);
+
+                if (strain > MAX_STRAIN) {
+                    velocity -= Math.abs(strain) / ( MAX_STRAIN * 1.25 );
+                }
+
+                var dy = Math.max(mouse.y - anchorB.y, 0),
+                    dx = mouse.x - ( containerOffsetX + anchorB.x );
+
+// Angle the ribbon towards the mouse but limit it avoid extremes
+                var angle = Math.min(130, Math.max(50, Math.atan2(dy, dx) * 180 / Math.PI));
+
+                rotation += ( angle - rotation ) * 0.1;
+            }
+// Ease ribbon towards the OPENED state
+            else if (state === STATE_OPENED) {
+                anchorB.x += ( openedX - anchorB.x ) * 0.2;
+                anchorB.y += ( openedY - anchorB.y ) * 0.2;
+
+                rotation += ( 90 - rotation ) * 0.02;
+            }
+// Ease ribbon towards the CLOSED state
+            else {
+                anchorB.x += ( anchorA.x - anchorB.x ) * 0.2;
+                anchorB.y += ( anchorA.y - anchorB.y ) * 0.2;
+
+                rotation += ( 45 - rotation ) * 0.2;
+            }
+        }
+
+        function render() {
+
+            if (dom.curtain) {
+                dom.curtain.style.top = -100 + Math.min(( curtainCurrentY / window.innerHeight ) * 100, 100) + '%';
+            }
+
+            dom.ribbon.style[prefix('transform')] = transform(0, curtainCurrentY, 0);
+            dom.ribbonTag.style[prefix('transform')] = transform(anchorB.x, anchorB.y, rotation);
+
+            var dy = anchorB.y - anchorA.y,
+                dx = anchorB.x - anchorA.x;
+
+            var angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+            dom.ribbonString.style.width = anchorB.y + 'px';
+            dom.ribbonString.style[prefix('transform')] = transform(anchorA.x, 0, angle);
+
+        }
+
+        function prefix(property, el) {
+            var propertyUC = property.slice(0, 1).toUpperCase() + property.slice(1);
+
+            for (var i = 0, len = VENDORS.length; i < len; i++) {
+                var vendor = VENDORS[i];
+
+                if (typeof ( el || document.body ).style[vendor + propertyUC] !== 'undefined') {
+                    return vendor + propertyUC;
+                }
+            }
+
+            return property;
+        }
+
+        function transform(x, y, r) {
+            return 'translate(' + x + 'px,' + y + 'px) rotate(' + r + 'deg)';
+        }
+
+        function distanceBetween(x1, y1, x2, y2) {
+            var dx = x1 - x2;
+            var dy = y1 - y2;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        /**
+         * Defines a 2D position.
+         */
+        function Point(x, y) {
+            this.x = x || 0;
+            this.y = y || 0;
+        }
+
+        Point.prototype.distanceTo = function (x, y) {
+            var dx = x - this.x;
+            var dy = y - this.y;
+            return Math.sqrt(dx * dx + dy * dy);
+        };
+
+        Point.prototype.clone = function () {
+            return new Point(this.x, this.y);
+        };
+
+        Point.prototype.interpolate = function (x, y, amp) {
+            this.x += ( x - this.x ) * amp;
+            this.y += ( y - this.y ) * amp;
+        };
+
+        window.requestAnimFrame = (function () {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+        })();
+
+        initialize();
+
+    })();
+
+</script>
+
+
+</body>
+
+</html>

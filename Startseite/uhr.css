@@ -1,0 +1,65 @@
+#Uhr01 
+{
+position:relative;
+height:20px;
+width:220px;
+border:0px solid #000000;
+text-align:center;
+padding:7px;
+margin:0px;
+font-family: Tahoma,Arial,Helvetica,sans-serif;
+color:#C0C0C0;
+font-size:17px;
+line-height:100.1%;
+background-color:transparent;
+}
+
+
+body
+{
+color: #C0C0C0;
+}
+
+
+a:link
+{
+font-family: Comic Sans MS;
+font-size: 12px;
+color: #C0C0C0;
+font-weight: bold;
+text-decoration: none;
+text-underline: none;
+}
+
+
+a:active
+{
+font-family: Comic Sans MS;
+font-size: 12px;
+color: #C0C0C0;
+font-weight: bold;
+text-decoration: none;
+text-underline: none;
+}
+
+
+a:visited
+{
+font-family: Comic Sans MS;
+font-size: 12px;
+color: #C0C0C0;
+font-weight: bold;
+text-decoration: none;
+text-underline: none;
+}
+
+
+a:hover
+{
+font-family: Comic Sans MS;
+font-size: 12px;
+color: #0080FF;
+font-weight: bold;
+text-decoration: none;
+text-underline: none;
+}

@@ -1,0 +1,93 @@
+body
+{ 
+cursor:url('curs.html'), auto !important;
+color: #C0C0C0;
+background: #000000;
+background-image:url(wall.jpg);
+background-position:top center;
+background-repeat:no-repeat;
+}
+
+.mouse
+{
+cursor:url('curs.html'), auto !important;
+}
+
+a:link
+{ 
+cursor:url('cursa.html'), auto !important;
+font-family: Comic Sans MS;
+font-size: 12px;
+color: #C0C0C0;
+font-weight: bold;
+text-decoration: none;
+text-underline: none; 
+}
+
+
+a:active
+{ 
+cursor:url('cursa.html'), auto !important;
+font-family: Comic Sans MS;
+font-size: 12px;
+color: #C0C0C0;
+font-weight: bold;
+text-decoration: none;
+text-underline: none; 
+}
+
+
+a:visited
+{ 
+cursor:url('cursa.html'), auto !important;
+font-family: Comic Sans MS;
+font-size: 12px;
+color: #C0C0C0;
+font-weight: bold;
+text-decoration: none;
+text-underline: none; 
+}
+
+
+a:hover
+{ 
+cursor:url('cursa.html'), auto !important;
+font-family: Comic Sans MS;
+font-size: 12px;
+color: #0080FF;
+font-weight: bold;
+text-decoration: none;
+text-underline: none; 
+}
+
+.inputstart
+{
+cursor:url('curs.html'), auto !important;
+color:#C0C0C0;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size:13px;
+border:1px solid #C0C0C0;
+background-color: transparent;
+background-image: url(Guide/pics/bg1.png);
+padding:1px;
+}
+
+.buttonstart
+{
+cursor:url('curs.html'), auto !important;
+display: block;
+color:#C0C0C0;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size:13px;
+font-weight: bold;
+border-top: #808080 1px solid;
+border-left: #808080 1px solid;
+border-bottom: #404040 1px solid;
+border-right: #404040 1px solid;
+padding:1px;
+background-color:transparent;
+background-image: url(Guide/pics/bg1.png);
+width:55px;
+height:21px;
+text-align:center,middle;
+}

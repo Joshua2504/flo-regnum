@@ -1,0 +1,67 @@
+body
+{
+cursor:url('../curs.html'), auto !important;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+color: #C0C0C0;
+font-size: 13px;
+}
+
+
+.bg
+{
+background-image:url(pics/bg.png);
+}
+
+
+.bg1
+{
+background-image:url(http://www.bplaced.net/404);
+}
+
+
+a:link
+{
+cursor:url('../cursa.html'), auto !important;
+font-family: Comic Sans MS;
+font-size: 12px;
+color: #C0C0C0;
+font-weight: bold;
+text-decoration: none;
+text-underline: none;
+}
+
+
+a:active
+{
+cursor:url('../cursa.html'), auto !important;
+font-family: Comic Sans MS;
+font-size: 12px;
+color: #C0C0C0;
+font-weight: bold;
+text-decoration: none;
+text-underline: none;
+}
+
+
+a:visited
+{
+cursor:url('../cursa.html'), auto !important;
+font-family: Comic Sans MS;
+font-size: 12px;
+color: #C0C0C0;
+font-weight: bold;
+text-decoration: none;
+text-underline: none;
+}
+
+
+a:hover
+{
+cursor:url('../cursa.html'), auto !important;
+font-family: Comic Sans MS;
+font-size: 12px;
+color: #0080FF;
+font-weight: bold;
+text-decoration: none;
+text-underline: none;
+}

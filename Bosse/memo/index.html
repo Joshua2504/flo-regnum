@@ -1,0 +1,294 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../style.css">
+<title>Boss-Memo</title>
+
+
+<style type="text/css">
+<!--
+body {
+margin:0px;
+padding:0px;
+background-color:transparent;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+a{
+font-family:Arial,Helvetica,sans-serif;
+font-size:12px;
+font-weight:normal;
+text-decoration:none;
+color: #ffffff;
+}
+a:visited {color:#ffffff;}
+a:hover{color:#8C8984;}
+
+td{
+font-family:Arial,Helvetica,sans-serif;
+font-size:13px;
+font-weight:normal;
+text-decoration:none;
+color: #000000;
+Line-height:130%;
+}
+
+h1{
+font-family:Verdana,Arial,Helvetica,sans-serif;
+font-size:18px;
+font-weight:normal;
+text-decoration:none;
+color: #8F8F8F;
+}
+
+pre{
+font-family:monospace;
+font-size:13px;
+font-weight:normal;
+text-decoration:none;
+color: #66B200;
+}
+
+-->
+</style>
+
+
+
+<script type="text/javascript" language="JavaScript">
+<!-- Brian; Gosselin , mod;: W. jansen; -->
+<!-- Begin;
+
+// hier den Pfad fÃ¼r die Grafiken eintragen
+var dpfad = 'pics/';
+
+// hier den Namen ohne die letzte Ziffer fÃ¼r die Grafiken eintragen
+var dname = 'bild0';
+
+// hier Punkt und Dateiendung fÃ¼r die Grafiken eintragen (.gif / .jpg)
+var dende = '.png';
+
+// hier die Breite fÃ¼r die Grafiken eintragen
+var dbreite = 36;
+
+// hier die HÃ¶he fÃ¼r die Grafiken eintragen
+var dhoehe = 38;
+
+
+
+
+
+var dleer = dpfad + dname + "0" + dende;
+
+var counter = 0;
+var pics = [];
+for (i = 0; i <= 32; i++) {
+pics[i] = new Image();
+pics[i].src = dpfad + dname + i + dende;
+}
+var map=[01, 01, 02, 02, 03, 03, 04, 04, 05, 05, 06, 06, 07, 07, 08, 08, 09, 09, 10, 10,
+                 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20,
+                 21, 21, 22, 22, 23, 23, 24, 24, 25, 25, 26, 26, 27, 27, 28, 28, 29, 29, 30, 30,
+                 31, 31, 32, 32];
+var user = [];
+var temparray = [];
+var clickarray = [00, 00];
+var ticker, sec, min, ctr, id, oktoclick, finished;
+
+
+function init() {
+clearTimeout(id);
+counter = 0;
+document.memoryform.zaehler.value = "";
+document.memoryform.nachricht.value = "";
+for (i = 0; i <= 63 ;i++) {
+user[i] = 0;
+}
+
+
+
+ticker = 0;
+min = 0;
+sec = 0;
+ctr = 0;
+oktoclick = true;
+finished = 0;
+document.memoryform.zeit.value = "";
+document.memoryform.zaehler.value = "Versuche: " + counter;
+mischen();
+runclk();
+for (i = 0; i <= 63; i++) {
+document.memoryform[('img'+i)].src = dleer;
+   }
+}
+
+function runclk() {
+min = Math.floor(ticker/60);
+sec = (ticker-(min*60))+'';
+    if (sec.length == 1) {
+        sec = "0" + sec
+    }
+    ticker++;
+if (finished < 8) {
+document.memoryform.zeit.value = "Zeit: " + min+":"+sec;
+}
+id = setTimeout('runclk()', 1000);
+}
+
+function mischen() {
+var counter = 0;
+document.memoryform.zaehler.value = "Versuche: " + counter;
+for (z = 0; z < 8; z++) {
+for (x = 0; x <= 63; x++) {
+temparray[0] = Math.floor(Math.random()*64);
+temparray[1] = map[temparray[0]];
+temparray[2] = map[x];
+map[x] = temparray[1];
+map[temparray[0]] = temparray[2];
+      }
+   }
+}
+
+function showimage(but) {
+counter = counter +1;
+
+if (oktoclick) {
+oktoclick = false;
+document.memoryform[('img'+but)].src = dpfad + dname + map[but] + dende;
+if (ctr == 0) {
+ctr++;
+clickarray[0] = but;
+oktoclick = true;
+} else {
+clickarray[1] = but;
+ctr = 0;
+setTimeout('returntoold()', 600);
+      }
+   }
+}
+function returntoold() {
+document.memoryform.zaehler.value = "Versuche: " + counter /2;
+if ((clickarray[0] == clickarray[1]) && (!user[clickarray[0]])) {
+document.memoryform[('img'+clickarray[0])].src = dleer;
+oktoclick = true;
+} else {
+if (map[clickarray[0]] != map[clickarray[1]]) {
+if (user[clickarray[0]] == 0) {
+document.memoryform[('img'+clickarray[0])].src = dleer;
+}
+if (user[clickarray[1]] == 0) {
+document.memoryform[('img'+clickarray[1])].src = dleer;
+   }
+}
+if (map[clickarray[0]] == map[clickarray[1]]) {
+if (user[clickarray[0]] == 0&&user[clickarray[1]] == 0) { finished++; }
+user[clickarray[0]] = 1;
+user[clickarray[1]] = 1;
+}
+if (finished >= 32) {
+//alert('Aufgabe gel&ouml;st! Ben&ouml;tigte '+document.memoryform.zeit.value+'  ');
+document.memoryform.nachricht.value = 'Aufgabe gel&ouml;st! Ben&ouml;tigte '+document.memoryform.zeit.value;
+
+} else {
+oktoclick = true;
+      }
+   }
+}
+
+
+//  End -->
+</script>
+
+
+<style type="text/css">
+<!--
+.textfeld {
+color:#ffffff;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size:14px;
+border:1px solid #C0C0C0;
+padding:1px;
+background-color: #000000;
+width:110px;
+height:20px;
+text-align:center;
+}
+
+
+.message {
+color:#C0C0C0;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size:13px;
+border:1px solid #C0C0C0;
+padding:1px;
+background-color: #000000;
+width:408px;
+height:20px;
+text-align:center;
+}
+
+.butt {
+color:#C0C0C0;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size:13px;
+font-weight: bold;
+border:1px solid #C0C0C0;
+border-top: #808080 1px solid;
+border-left: #808080 1px solid;
+border-bottom: #404040 1px solid;
+border-right: #404040 1px solid;
+padding:1px;
+background-color: #000000;
+width:110px;
+height:20px;
+text-align:center;
+}
+
+
+.grafik {
+border:0px solid #000000;
+}
+-->
+</style>
+
+
+
+
+
+</head>
+<body class="bg">
+<br>
+
+<!-- Navzeile oben -->
+<div align="center">
+
+<form name="memoryform">
+
+<script type="text/javascript" language="javascript">
+<!-- Begin;
+
+document.write('<table cellpadding="0" cellspacing="2" border="0">');
+for (r = 0; r <= 7; r++) {
+document.write('<tr>');
+for (c = 0; c <= 7; c++) {
+document.write('<td align="center">');
+document.write('<a href="javascript:void(0);javascript:showimage('+((8*r)+c)+')" onClick="document.memoryform.zeit.focus()">');
+document.write('<img width="' + dbreite +'" height="' + dhoehe + '" class="grafik" border="0" src="' + dleer + '" name="img'+((8*r)+c)+'" border="0">');
+document.write('</a></td>');
+}
+document.write('</tr>');
+}
+document.write('</table>');
+
+// End -->
+</script>
+<br>
+<input id="zaehler" class="textfeld" readonly type="text" value="" name="zaehler"> &nbsp;&nbsp;
+<input id="zeit" class="textfeld" readonly type="text" value="" name="zeit"> &nbsp;&nbsp;
+<input onClick="setTimeout('init()',1000)" class="butt" value="Start" type="button"><br><br>
+<input  id="nachricht" class="message" readonly type="text" value="Start-Button anklicken" name="nachricht">
+
+</form>
+</div>
+
+</body>
+</html>
